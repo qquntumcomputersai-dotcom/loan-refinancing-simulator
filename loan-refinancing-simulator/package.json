@@ -1,0 +1,13 @@
+{
+  "name": "loan-refinancing-simulator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A dependency-free loan and refinancing comparison demo with amortization schedules and tests.",
+  "scripts": {
+    "test": "node --test",
+    "start": "npx --yes http-server . -p 8080"
+  },
+  "engines": { "node": ">=20" },
+  "license": "MIT"
+}

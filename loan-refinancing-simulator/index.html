@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compare fixed-rate loan and refinancing scenarios with transparent calculations and amortization schedules.">
+  <title>Loan & Refinance Lab | Banking Logic Showcase</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <div class="brand"><span class="brand-icon" aria-hidden="true">L</span><span>Loan & Refinance <strong>Lab</strong></span></div>
+      <span class="demo-pill">Portfolio demo · Fictional data</span>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="main-title">
+        <p class="eyebrow">FINANCIAL BUSINESS LOGIC / JAVASCRIPT</p>
+        <h1 id="main-title">Make the numbers<br><span>make sense.</span></h1>
+        <p class="intro-copy">Explore fixed-rate loans and refinancing scenarios. Compare monthly instalments, total remaining costs and amortization schedules with transparent, testable calculations.</p>
+      </section>
+
+      <div class="layout">
+        <section class="panel form-panel" aria-labelledby="inputs-heading">
+          <div class="panel-heading"><div><p class="section-label">01 / INPUTS</p><h2 id="inputs-heading">Your scenarios</h2></div><span class="step">Configure</span></div>
+          <form id="comparison-form" novalidate>
+            <div class="field"><label for="currency">Currency</label><select id="currency"><option value="EUR">EUR — Euro</option><option value="USD">USD — US Dollar</option><option value="RON">RON — Romanian Leu</option></select></div>
+            <fieldset>
+              <legend><span class="legend-dot blue"></span> Current loan</legend>
+              <div class="field"><label for="balance">Outstanding principal</label><div class="input-wrap"><input id="balance" type="number" min="0.01" step="0.01" value="120000" required></div></div>
+              <div class="field-grid"><div class="field"><label for="current-rate">Annual interest (%)</label><input id="current-rate" type="number" min="0" max="100" step="0.01" value="7.5" required></div><div class="field"><label for="remaining-months">Months remaining</label><input id="remaining-months" type="number" min="1" max="600" step="1" value="180" required></div></div>
+            </fieldset>
+            <fieldset>
+              <legend><span class="legend-dot green"></span> Refinancing offer</legend>
+              <div class="field-grid"><div class="field"><label for="new-rate">Annual interest (%)</label><input id="new-rate" type="number" min="0" max="100" step="0.01" value="5.4" required></div><div class="field"><label for="new-months">New term (months)</label><input id="new-months" type="number" min="1" max="600" step="1" value="180" required></div></div>
+              <div class="field"><label for="fees">Upfront refinancing fees</label><input id="fees" type="number" min="0" step="0.01" value="1200" required></div>
+            </fieldset>
+            <p id="form-error" class="error" role="alert" hidden></p>
+            <button class="primary-button" type="submit">Compare scenarios <span aria-hidden="true">↗</span></button>
+          </form>
+        </section>
+
+        <section class="panel results-panel" id="results" aria-labelledby="results-heading" hidden>
+          <div class="panel-heading"><div><p class="section-label">02 / ANALYSIS</p><h2 id="results-heading">Side-by-side results</h2></div><span class="step">Live calculation</span></div>
+          <div class="metric-grid">
+            <article class="metric"><span class="metric-label">Current monthly payment</span><strong id="current-payment">—</strong><span class="metric-caption">Existing loan</span></article>
+            <article class="metric"><span class="metric-label">New monthly payment</span><strong id="new-payment">—</strong><span class="metric-caption">Refinancing offer</span></article>
+            <article class="metric accent"><span class="metric-label">Monthly payment difference</span><strong id="monthly-savings">—</strong><span class="metric-caption">Positive means lower payment</span></article>
+            <article class="metric accent"><span class="metric-label">Total remaining cost difference</span><strong id="total-savings">—</strong><span class="metric-caption">Positive means lower overall cost</span></article>
+          </div>
+          <div class="comparison"><div class="comparison-head"><h3>Total remaining payments</h3><p>Includes upfront fees in refinancing cost</p></div>
+            <div class="bar-row"><div class="bar-label"><span>Current loan</span><strong id="current-cost">—</strong></div><div class="bar-track"><div class="bar blue-bar" id="bar-current"></div></div></div>
+            <div class="bar-row"><div class="bar-label"><span>Refinanced loan</span><strong id="new-cost">—</strong></div><div class="bar-track"><div class="bar green-bar" id="bar-new"></div></div></div>
+            <div class="details-row"><div><span>Upfront fees</span><strong id="fees-display">—</strong></div><div><span>Simple fee break-even</span><strong id="break-even">—</strong></div></div>
+            <p id="term-warning" class="warning" hidden>⚠ The loan terms differ. A lower monthly payment does not necessarily mean a lower total cost. Compare the full remaining costs.</p>
+          </div>
+          <p class="disclaimer">Educational model only. Fixed nominal rates, monthly compounding, no variable-rate changes, taxes, insurance, penalties, or APR calculation. This is not a lending offer or financial advice.</p>
+        </section>
+      </div>
+
+      <section class="panel schedule-panel" aria-labelledby="schedule-heading">
+        <div class="panel-heading schedule-header"><div><p class="section-label">03 / BREAKDOWN</p><h2 id="schedule-heading">Amortization schedule</h2><p id="schedule-caption" class="subtle">Calculated from the selected scenario</p></div><div class="schedule-actions"><label for="schedule-choice" class="sr-only">Choose scenario</label><select id="schedule-choice"><option value="proposed">Refinanced loan</option><option value="current">Current loan</option></select><button id="download-csv" type="button" class="secondary-button">Export CSV ↓</button></div></div>
+        <div class="table-scroll"><table><thead><tr><th scope="col">Month</th><th scope="col">Payment</th><th scope="col">Principal</th><th scope="col">Interest</th><th scope="col">Remaining balance</th></tr></thead><tbody id="schedule-body"></tbody></table></div>
+      </section>
+    </main>
+    <footer><span>Loan & Refinance Lab · Open-source portfolio project</span><span>Vanilla JavaScript · Financial calculations · Unit tests</span></footer>
+  </div>
+</body>
+</html>
